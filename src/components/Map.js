@@ -14,8 +14,8 @@ class Map extends Component {
     });
     if (selected.length > 0) {
       const feature = selected[0]
-      this.popup.getElement().innerHTML = feature.getProperties().name
-      this.popup.setPosition(feature.getGeometry().getFirstCoordinate())
+      // this.popup.getElement().innerHTML = feature.getProperties().name
+      // this.popup.setPosition(feature.getGeometry().getFirstCoordinate())
     }
   }
   componentWillUpdate(nextProps) {
@@ -61,15 +61,15 @@ class Map extends Component {
       })
     })
 
-    const popupElement = document.getElementById('popup')
-    this.popup = new OpenLayers.Overlay({
-      element: popupElement,
-      autoPan: true,
-      autoPanAnimation: {
-        duration: 250
-      }
-    })
-    this._map.addOverlay(this.popup)
+    // const popupElement = document.getElementById('popup')
+    // this.popup = new OpenLayers.Overlay({
+    //   element: popupElement,
+    //   autoPan: true,
+    //   autoPanAnimation: {
+    //     duration: 250
+    //   }
+    // })
+    // this._map.addOverlay(this.popup)
 
     const updateVisiblePlaces = () => {
       var extent = this._map.getView().calculateExtent(this._map.getSize());
@@ -97,11 +97,12 @@ class Map extends Component {
       //   })
       // }) 
     });
-    this._map.addInteraction(mapClick);
+    // this._map.addInteraction(mapClick);
     mapClick.on('select', e => {
       e.preventDefault();
       var feature = e.selected[0].getProperties().name.replace(/<(?:.|\n)*?>/g, '');
       this.props.selectAction(feature)  
+      console.log('feature : ' + feature)
     });
   }
 
@@ -109,11 +110,20 @@ class Map extends Component {
     if (this.loading) {}
     return (
       <div className='map' ref={olmapDiv => this._initializeOpenLayers(olmapDiv)} data='ol-map'>
-        <div id="popup" className="ol-popup"></div>
       </div>
     )
   }
-}
+}  
+
+// render() {
+//     if (this.loading) {}
+//     return (
+//       <div className='map' ref={olmapDiv => this._initializeOpenLayers(olmapDiv)} data='ol-map'>
+//         <div id="popup" className="ol-popup"></div>
+//       </div>
+//     )
+//   }
+// }
 
 const mapStateToProps = state => {
   const { places, selected } = state.placeSelect

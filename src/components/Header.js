@@ -45,7 +45,7 @@ class Header extends Component {
 		return (
 			<nav 
 				className="navbar navbar-toggleable-sm navbar-light bg-faded"
-				style={{backgroundColor: '#7c683c'}}
+				style={{backgroundColor: '#292b2c'}}
 			>
 			  <Link to="/" className="navbar-brand" href="#">
 					<h1 

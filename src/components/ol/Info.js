@@ -22,7 +22,7 @@ class Info extends Component {
       if (this.state[name] !== height) {
 	      this.setState({ [name]: height })
       }
- 			return
+ 			return 
     }
     return  	
   }  
@@ -42,13 +42,14 @@ class Info extends Component {
 			ERC_threshold: 'No Data',
     }
 		const { zoneSelect } = this.props
+		console.log('Info.js' + JSON.stringify(zoneSelect));
 		const zoneData = zoneSelect.zoneData || noData
 		const updates = this.props.status.filter(zone => {
 			return zone.zone === zoneSelect.selected
 		}) 
 		// console.log(window.getComputedStyle(document.body).getPropertyValue('font-size'))
 		return ( 
-  		<div className="card border-0" style={{backgroundColor: '#917946'}}>
+  		<div className="card border-0" style={{backgroundColor: '#EEEEEE'}}>
         
         <h3 className="card-header text-center text-white card-title" 
         	style={{backgroundColor: zoneSelect.color, textShadow: '#364230 1px 1px 1px'}}
@@ -58,7 +59,7 @@ class Info extends Component {
   				{`Zone: ${zoneSelect.selected}`}
       	</h3>
     		
-    		<div className="card-block rounded" style={{backgroundColor: '#917946'}}>
+    		<div className="card-block rounded" style={{backgroundColor: '#ccc'}}>
         	<ul className="list-group" id="history" ref={ulNode => this.getHeight(ulNode)}>
         		<li className='list-group-item'>Observations updated on: {zoneData.obsdate || 'No Data'}</li>
         		<li className='list-group-item'>Critical Threshold: {zoneData.ERC_threshold}</li>

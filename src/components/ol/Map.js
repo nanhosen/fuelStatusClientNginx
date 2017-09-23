@@ -88,21 +88,24 @@ class Map extends Component {
     })
     this._map.getView().fit([ -13385849.855545742, 4164163.9360093023, -12120670.513975333, 5733155.322681262 ], (this._map.getSize()), {padding: [10, 20, 50, 20], constrainResolution: false})
 
-    const content = document.getElementById('popup-content')
-    this.popup = new ol.Overlay({
-      element: document.getElementById('popup'),
-      autoPan: true,
-      autoPanAnimation: {
-        duration: 250
-      }
-    })
-    this._map.addOverlay(this.popup)
-    const closer = document.getElementById('popup-closer')
-    closer.onclick = () => {
-      this.popup.setPosition(undefined)
-      closer.blur()
-      return false
-    }
+    // const content = document.getElementById('popup-content')
+    // this.popup = new ol.Overlay({
+    //   element: document.getElementById('popup'),
+    //   autoPan: true,
+    //   autoPanAnimation: {
+    //     duration: 250
+    //   }
+    // })
+    // this._map.addOverlay(this.popup)
+    // const closer = document.getElementById('popup-closer')
+    // closer.onclick = () => {
+    //   this.popup.setPosition(undefined)
+    //   closer.blur()
+    //   return false
+    // }
+
+
+
 
     const selectClick = new ol.interaction.Select({
       condition: ol.events.condition.click,
@@ -110,13 +113,15 @@ class Map extends Component {
       style: feature => {
         const selected = feature.get('STATE_ZONE')
         const { status } = this.props.isCritical[selected] || ''
-        const color = {
-          'notcritical': 'rgba(44, 107, 36, 1)',
-          'critical': 'rgba(160, 35, 28, 1)',
-          'approachingcritical': 'rgba(249, 238, 31, 1)',
-        }[status] || 'rgba(176, 176, 176, 1)'
+        const color = !status 
+        ? 'rgba(44, 107, 36, 0.8)'
+        : {
+            'notcritical': 'rgba(44, 107, 36, 0.8)',
+            'critical': 'rgba(160, 35, 28, 0.8)',
+            'approachingcritical': 'rgba(249, 238, 31, 0.8)',
+          }[status] || 'rgba(176, 176, 176, 1)'
 
-        let defaultColor = color.replace(`1)`, `.6)`)
+        let defaultColor = color.replace(`1)`, `.6)`) 
         const zoneData = this.props.isCritical[selected] ? this.props.isCritical[selected] : null
         this.props.selectAction({ selected, color: defaultColor, zoneData })
 
@@ -139,43 +144,43 @@ class Map extends Component {
       }
     })    
 
-    const selectHover = new ol.interaction.Select({
-      condition: ol.events.condition.pointerMove,
-      layers: [ this.props.layer ],
-      style: feature => {
-        const selected = feature.get('STATE_ZONE')
-        const { status } = this.props.isCritical[selected] || ''
-        const color = {
-          'notcritical': 'rgba(44, 107, 36, 1)',
-          'critical': 'rgba(160, 35, 28, 1)',
-          'approachingcritical': 'rgba(249, 238, 31, 1)',
-        }[status] || 'rgba(176, 176, 176, 1)'
+    // const selectHover = new ol.interaction.Select({
+    //   condition: ol.events.condition.pointerMove,
+    //   layers: [ this.props.layer ],
+    //   style: feature => {
+    //     const selected = feature.get('STATE_ZONE')
+    //     const { status } = this.props.isCritical[selected] || ''
+    //     const color = {
+    //       'notcritical': 'rgba(44, 107, 36, 1)',
+    //       'critical': 'rgba(160, 35, 28, 1)',
+    //       'approachingcritical': 'rgba(249, 238, 31, 1)',
+    //     }[status] || 'rgba(176, 176, 176, 1)'
 
-        const defaultColor = color.replace(`1)`, `.6)`)
-        const zoneData = this.props.isCritical[selected] ? this.props.isCritical[selected] : null
-        this.props.selectAction({ selected, color: defaultColor, zoneData })
+    //     const defaultColor = color.replace(`1)`, `.8)`)
+    //     const zoneData = this.props.isCritical[selected] ? this.props.isCritical[selected] : null
+    //     this.props.selectAction({ selected, color: defaultColor, zoneData })
 
-        return new ol.style.Style({
-          fill: new ol.style.Fill({ color }),
-          stroke: new ol.style.Stroke({
-            color: 'rgba(255, 255, 255, .9)',
-            width: 3
-          }),
-          text: new ol.style.Text({
-            font: '15px Montserrat, sans-serif',
-            fill: new ol.style.Fill({ color: '#000' }),
-            stroke: new ol.style.Stroke({
-              color: 'rgba(238, 238, 238, .7)',
-              width: 3
-            }),
-            text: selected
-          })
-        })
-      }  
-    })    
+    //     return new ol.style.Style({
+    //       fill: new ol.style.Fill({ color }),
+    //       stroke: new ol.style.Stroke({
+    //         color: 'rgba(255, 255, 255, .9)',
+    //         width: 3
+    //       }),
+    //       text: new ol.style.Text({
+    //         font: '15px Montserrat, sans-serif',
+    //         fill: new ol.style.Fill({ color: '#000' }),
+    //         stroke: new ol.style.Stroke({
+    //           color: 'rgba(238, 238, 238, .7)',
+    //           width: 3
+    //         }),
+    //         text: selected
+    //       })
+    //     })
+    //   }  
+    // })    
 
     this._map.addInteraction(selectClick)
-    this._map.addInteraction(selectHover)
+    // this._map.addInteraction(selectHover)
 
     selectClick.on('select', e => {
       e.preventDefault()
@@ -183,16 +188,17 @@ class Map extends Component {
       const coord = e.mapBrowserEvent.coordinate
       const { zoneSelect } = this.props
       const zoneData = zoneSelect.zoneData || null 
-      if (selected) {
-        content.innerHTML = `${selected} Current Status:<br />3 Day ERC average: ${zoneData.ThreeDayAverage}<br />Critical Threshold: ${zoneData.ERC_threshold}<br />Observations updated on: ${zoneData.obsdate}`
-        this.popup.setPosition(coord)
+      if (selected && zoneData) {
+        console.log(zoneData)
+        // content.innerHTML = `${selected} Current Status:<br />3 Day ERC average: ${zoneData.ThreeDayAverage}<br />Critical Threshold: ${zoneData.ERC_threshold}<br />Observations updated on: ${zoneData.obsdate}`
+        // this.popup.setPosition(coord)
       }
-      selected || (this.popup.setPosition(undefined) && e.selected.clear())
+      // selected || (this.popup.setPosition(undefined) && e.selected.clear())
       // !selected && this.popup.setPosition(undefined)
     })
 
-    selectHover.on('select', e => {
-      e.preventDefault()
+    // selectHover.on('select', e => {
+    //   e.preventDefault()
       
       // const zoneERC = isCritical[selected] ? isCritical[selected]['status'] : 'No Data'
       // const ERC = isCritical[selected] ? isCritical[selected]['ERC'] : 'No Data'
@@ -259,17 +265,27 @@ class Map extends Component {
       // }
 
 
-    })
+    // })
   }
   
-  render() {
+//   render() {
+//     // if (this.loading) {}
+//     return (
+//       <div className='card h-100 border-0' ref={olmapDiv => this._initializeOpenLayers(olmapDiv)} data='ol-map'>
+//         <div id="popup" className="ol-popup">
+//           <a href="#" id="popup-closer" className="ol-popup-closer"></a>
+//           <div id="popup-content"></div>
+//         </div> 
+//       </div>
+//     )
+//   }
+// }  
+
+render() {
     // if (this.loading) {}
     return (
       <div className='card h-100 border-0' ref={olmapDiv => this._initializeOpenLayers(olmapDiv)} data='ol-map'>
-        <div id="popup" className="ol-popup">
-          <a href="#" id="popup-closer" className="ol-popup-closer"></a>
-          <div id="popup-content"></div>
-        </div> 
+        
       </div>
     )
   }

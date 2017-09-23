@@ -22,7 +22,7 @@ const Textarea = ({ input, label, placeholder, rows, type, meta: { touched, erro
 const Input = ({ input, label, placeholder, type, checked, meta: { touched, error, invalid } }) => (
   <div className={`form-group ${touched && invalid ? 'has-danger' : ''}`}>
     <label className='text-white' 
-      style={{color: '#f89b2d', textShadow: '#364230 1px 1px 1px', fontSize: '1rem', marginBottom: '0rem', marginTop: '0rem'}}
+      style={{color: '#848b8a', textShadow: '#364230 1px 1px 1px', fontSize: '1rem', marginBottom: '0rem', marginTop: '0rem'}}
     >
     {label}
     </label>
@@ -211,10 +211,10 @@ class Zone extends React.Component {
         <div className="card-header bg-inverse text-warning">
           <h4 className="card-title font-weight-bold mb-0">Fire Weather Zone {form}</h4>
         </div>        
-        <div className="card-block" style={{backgroundColor: '#917946'}}>
+        <div className="card-block" style={{backgroundColor: '#7d8b8a'}}>
           <div className='form-group'>
-            <div className='bg-info text-white p-2 mb-2 rounded'
-              style={{color: '#f89b2d', textShadow: '#364230 1px 1px 1px', fontSize: '1rem'}}
+            <div className='text-white p-2 mb-2 rounded'
+              style={{backgroundColor: '#585f5f', color: '#f89b2d', textShadow: '#364230 1px 1px 1px', fontSize: '1rem'}}
             >
               <label className='text-white my-0'>Currently Selected RAWS</label>
               {
@@ -302,7 +302,7 @@ class Zone extends React.Component {
             <Field name='remarks' component={Textarea} label='Remarks' placeholder={null} rows={3} />
           </div>
         </div>
-        <div className="card-footer" role="group">
+        <div style={{backgroundColor: '#585f5f'}} className="card-footer" role="group">
         {
           !this.state.response
           ? (<button
@@ -351,4 +351,4 @@ const mapStateToProps = state => {
   return { response }
 }
 Zone = connect(mapStateToProps, { updateZone, updateSuccess })(Zone)
-export default reduxForm()(Zone)
+export default reduxForm({})(Zone)

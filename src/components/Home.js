@@ -22,6 +22,7 @@ class Home extends Component {
   }
 	render() {
     const { isCritical, status } = this.props
+    // console.log('status: ' + JSON.stringify(isCritical))
     if (!isCritical || !status) {
       return <div>Loading</div>
     }
@@ -31,7 +32,7 @@ class Home extends Component {
    			<div className="mt-4 col-12 col-md-6 mb-2"> 
 	      	<div className="card h-100" 
             ref={node => this.getHeight(node)}
-          >
+          > 
             <Legend className='border-0' />
             <Map layer={ZoneLayer(isCritical)} />
     		 	</div> 

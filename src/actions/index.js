@@ -13,8 +13,8 @@ import {
 } from './types'
 
 
-const ROOT_URL = 'http://localhost:3090'
-// const ROOT_URL = 'https://gbccblm.us'
+// const ROOT_URL = 'http://localhost:3090'
+const ROOT_URL = 'https://gbccblm.us'
 
 // export function signinUser({ email, password }) {
 // export function signinUser(props) {
@@ -75,7 +75,7 @@ export function signinUser(props) {
 				history.push('/zonegroup')
 			})
 			.catch(() => {
-				dispatch(authError('You sir, are an idiot'))
+				dispatch(authError('Incorrect username/password. Please try again.'))
 			})
 	}
 }

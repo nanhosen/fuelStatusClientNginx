@@ -1,8 +1,43 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
+import NativeListener from './NativeListener'
+
 
 import * as actions from '../../actions'
+
+const Select = ({ input, label, placeholder, type, checked, meta: { touched, error, invalid } }) => (
+   <select {...input} id="specialists" className='custom-select' >
+    <option defaultValue="Select Group">Select Group</option>
+    <option value="Admin">Admin</option>
+    <option value="AZ-Fleming">AZ-Fleming</option>
+    <option value="Battle Mountain Group">Mountain Group</option>
+    <option value="BDC-Hislop">BDC-Hislop</option>
+    <option value="BDC-Low">BDC-Low</option>
+    <option value="Carson City Group">City Group</option>
+    <option value="CDC-Tobler">CDC-Tobler</option>
+    <option value="CDC-East">CDC-East</option>
+    <option value="CDC-Harris">CDC-Harris</option>
+    <option value="CDC-Shakespear">CDC-Shakespear</option>
+    <option value="CIC-Sever">CIC-Sever</option>
+    <option value="EIC-Pipkin">EIC-Pipkin</option>
+    <option value="Elko Group">Elko Group</option>
+    <option value="Ely Group">Ely Group</option>
+    <option value="MFC">MFC</option>
+    <option value="NUC-West">NUC-West</option>
+    <option value="NUC-East">NUC-East</option>
+    <option value="PAC">PAC</option>
+    <option value="RFC-East">RFC-East</option>
+    <option value="RFC-Manti">RFC-Manti</option>
+    <option value="SCC-Fair">SCC-Fair</option>
+    <option value="SCC-South">SCC-South</option>
+    <option value="Southern Nevada">Southern Nevada</option>
+    <option value="TDC-Norman">TDC-Norman</option>
+    <option value="UBC-High">UBC-High</option>
+    <option value="UBC-Low">UBC-Low</option>
+    <option value="Winnemucca Group">Winnemucca Group</option>              
+  </select>    
+)
 
 class Signin extends Component {
 	// handleFormSubmit({ email, password }) {
@@ -43,47 +78,27 @@ class Signin extends Component {
 	      </a>
 				<div 
 					className="dropdown-menu"
-					style={{padding: "17px", backgroundColor: '#a39a64'}}
+					style={{padding: "17px", backgroundColor: '#4d4d4d'}}
 				>
 					<form className="form" onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+					<NativeListener stopClick>
 						<Field 
-							component="input"
+							component={Select}						
+							// component="input"
 							className="form-control" 
 							placeholder="Select Group"
 							style={{backgroundColor: '#bbd7d6', textIndent: '7px'}}
 							name="username" 
 							list="specialists" 
-							onFocus={() => this.props.authError(null)}
+							onFocus={(e) => {
+								e.stopPropagation()
+								this.props.authError(null)
+								// document.getElementById('formDialog').classList.toggle('show')
+								console.log(e)
+							}}
 						/>
-						<datalist id="specialists">
-              <option value="Admin" />
-              <option value="AZ-Fleming" />
-              <option value="Battle Mountain Group" />
-              <option value="BDC-Hislop" />
-              <option value="BDC-Low" />
-              <option value="Carson City Group" />
-              <option value="CDC-Tobler" />
-              <option value="CDC-East" />
-              <option value="CDC-Harris" />
-              <option value="CDC-Shakespear" />
-              <option value="CIC-Sever" />
-              <option value="EIC-Pipkin" />
-              <option value="Elko Group" />
-              <option value="Ely Group" />
-              <option value="MFC" />
-              <option value="NUC-West" />
-              <option value="NUC-East" />
-              <option value="PAC" />
-              <option value="RFC-East" />
-              <option value="RFC-Manti" />
-              <option value="SCC-Fair" />
-              <option value="SCC-South" />
-              <option value="Southern Nevada" />
-              <option value="TDC-Norman" />
-              <option value="UBC-High" />
-              <option value="UBC-Low" />
-              <option value="Winnemucca Group" />              
-            </datalist>							
+					</NativeListener>	
+											
 						<Field name="password" component="input" type="password" className="form-control" placeholder="Password"
 							style={{backgroundColor: '#bbd7d6', textIndent: '7px'}}
 							onFocus={() => this.props.authError(null)}
@@ -92,7 +107,7 @@ class Signin extends Component {
 					  <button 
 					  	action="submit"
 					  	className="btn"
-	          	style={{marginTop: "5px", backgroundColor: 'rgb(124, 104, 60)', color: 'rgb(187, 215, 214)', fontWeight: 'bold', textShadow: '#364230 1px 1px 1px'}}
+	          	style={{marginTop: "5px", backgroundColor: '#ffffff', color: '#2d2d2d', fontWeight: 'bold', textShadow: '#364230 1px 1px 1px'}}
 					  >
 					  	Sign in
 					  </button>
