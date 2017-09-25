@@ -1,5 +1,6 @@
 #!/bin/sh
 ssh useradmin@138.68.27.50 <<EOF
 	cd ~/fuelStatusClient2 
-	yarn start 
+	mkdir jenkinsTest
+	exit
 EOF
