@@ -1,5 +1,4 @@
 #!/bin/sh
 ssh useradmin@138.68.27.50 <<EOF
-	cd ~/fuelStatusClient2
 	exit 
 EOF
