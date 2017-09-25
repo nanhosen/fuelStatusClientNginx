@@ -1,6 +1,5 @@
 #!/bin/sh
 ssh useradmin@138.68.27.50 <<EOF
-	cd ~/fuelStatusClient2 
-	mkdir jenkinsTest
+	cd ~/fuelStatusClient2
 	exit 
 EOF
