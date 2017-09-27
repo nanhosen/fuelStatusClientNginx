@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var app = express();
 
-
+//https://expressjs.com/en/starter/static-files.html
 // Define the port to run on
 app.set('port', 3080);
 
