@@ -9,7 +9,7 @@ app.set('port', 3080);
 // app.use(express.static(path.join(__dirname, 'build')));
 app.use('/client', express.static('build'))
 // app.use(express.static('build'))
-
+//test
 
 // Listen for requests
 var server = app.listen(app.get('port'), function() {
