@@ -1,5 +1,6 @@
 #!/bin/sh
 #testing again
 ssh useradmin@165.227.13.41 <<EOF
+pwd
 	exit 
 EOF
