@@ -1,6 +1,7 @@
 #!/bin/sh
 #testing again
 ssh useradmin@138.68.1.187 <<EOF
-pwd
+	cd ~/projects/fuelStatusClientNginx
+	forever start serveStatic.js
 	exit 
 EOF
