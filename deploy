@@ -2,6 +2,8 @@
 #testing again
 ssh useradmin@138.68.1.187 <<EOF
 	cd ~/projects/fuelStatusClientNginx
+	git pull origin master
+	forever stopall
 	forever start serveStatic.js
 	exit 
 EOF
