@@ -1,6 +1,6 @@
 #!/bin/sh
 #testing again
-ssh useradmin@165.227.13.41 <<EOF
+ssh useradmin@138.68.1.187 <<EOF
 pwd
 	exit 
 EOF
